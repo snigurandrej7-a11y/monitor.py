@@ -1,1 +1,21 @@
+import requests
+import time
+
+# Список монет для слежки
+COINS = ['bitcoin', 'ethereum', 'solana']
+
+def get_prices():
+    url = f"https://api.coingecko.com/api/v3/simple/price?ids={','.join(COINS)}&vs_currencies=usd"
+    try:
+        response = requests.get(url)
+        data = response.json()
+        for coin in COINS:
+            price = data[coin]['usd']
+            print(f"Курс {coin.capitalize()}: ${price}")
+    except Exception as e:
+        print(f"Ошибка при получении данных: {e}")
+
+if __name__ == "__main__":
+    print("--- Запуск мониторинга цен ---")
+    get_prices()
 
